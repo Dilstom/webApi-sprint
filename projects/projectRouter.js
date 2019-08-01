@@ -29,4 +29,15 @@ router.post('/', validateBody, (req, res) => {
   });
 });
 
+router.delete('/:id', validateId, (req, res) => {
+ projectsDb
+  .remove(req.params.id)
+  .then(project => {
+   res.status(200).json({ message: 'The project has been removed', project });
+  })
+  .catch(err => {
+   res.status(500).json(err);
+  });
+});
+
 module.exports = router;
