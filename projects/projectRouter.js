@@ -40,4 +40,15 @@ router.delete('/:id', validateId, (req, res) => {
   });
 });
 
+router.put('/:id', validateId, validateBody, (req, res) => {
+ projectsDb
+  .update(req.params.id, req.body)
+  .then(project => {
+   res.status(201).json({ project });
+  })
+  .catch(err => {
+   res.status(500).json(err);
+  });
+});
+
 module.exports = router;
