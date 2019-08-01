@@ -70,4 +70,21 @@ router.get('/:id/actions', validateId, (req, res) => {
   });
 });
 
+function validateId(req, res, next) {
+ projectsDb
+  .get(req.params.id)
+  .then(project => {
+   if (project) {
+    req.project = project;
+    console.log(req.project);
+    next();
+   } else {
+    res.status(400).json({ message: 'Id not found' });
+   }
+  })
+  .catch(err => {
+   res.status(500).json(err);
+  });
+}
+
 module.exports = router;
