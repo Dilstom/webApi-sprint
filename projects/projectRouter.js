@@ -87,4 +87,12 @@ function validateId(req, res, next) {
   });
 }
 
+function validateBody(req, res, next) {
+ if (!req.body.name || !req.body.description) {
+  res.status(400).json({ message: 'Missing required fields' });
+ } else {
+  next();
+ }
+}
+
 module.exports = router;
