@@ -51,4 +51,23 @@ router.put('/:id', validateId, validateBody, (req, res) => {
   });
 });
 
+router.get('/:id/actions', validateId, (req, res) => {
+ projectsDb
+  .getProjectActions(req.params.id)
+  .then(allActions => {
+   if (allActions.length > 0) {
+    res.status(200).json(allActions);
+   } else {
+    res
+     .status(404)
+     .json({
+      message: 'There are no any actions for this specified project Id',
+     });
+   }
+  })
+  .catch(err => {
+   res.status(500).json(err);
+  });
+});
+
 module.exports = router;
