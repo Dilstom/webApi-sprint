@@ -1,5 +1,6 @@
 const express = require('express');
 const projectsDb = require('../data/helpers/projectModel');
+const actionsDb = require('../data/helpers/actionModel');
 
 const router = express.Router();
 
@@ -58,11 +59,9 @@ router.get('/:id/actions', validateId, (req, res) => {
    if (allActions.length > 0) {
     res.status(200).json(allActions);
    } else {
-    res
-     .status(404)
-     .json({
-      message: 'There are no any actions for this specified project Id',
-     });
+    res.status(404).json({
+     message: 'There are no any actions for this specified project Id',
+    });
    }
   })
   .catch(err => {
@@ -99,6 +98,14 @@ function validateId(req, res, next) {
 
 function validateBody(req, res, next) {
  if (!req.body.name || !req.body.description) {
+  res.status(400).json({ message: 'Missing required fields' });
+ } else {
+  next();
+ }
+}
+
+function validateAction(req, res, next) {
+ if (!req.body.notes || !req.body.description) {
   res.status(400).json({ message: 'Missing required fields' });
  } else {
   next();
