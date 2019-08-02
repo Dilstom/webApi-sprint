@@ -26,5 +26,14 @@ router.delete('/:id', validateId, (req, res) => {
   .catch(err => res.status(500).json(err));
 });
 
+router.put('/:id', validateId, (req, res) => {
+ actionDb
+  .update(req.params.id, req.body) // don't have to validate req.body as it gets ald info if there is no changes
+  .then(action => {
+   res.status(201).json(action);
+  })
+  .catch(err => res.status(500).json(err));
+});
+
 
 module.exports = router;
