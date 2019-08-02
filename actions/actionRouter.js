@@ -35,5 +35,20 @@ router.put('/:id', validateId, (req, res) => {
   .catch(err => res.status(500).json(err));
 });
 
+function validateId(req, res, next) {
+ actionDb
+  .get(req.params.id)
+  .then(action => {
+   if (action) {
+    req.action = action;
+    next();
+   } else {
+    res.status(404).json({ message: 'Id not found' });
+   }
+  })
+  .catch(err => {
+   res.status(500).json(err);
+  });
+}
 
 module.exports = router;
