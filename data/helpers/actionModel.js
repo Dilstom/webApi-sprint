@@ -6,10 +6,8 @@ module.exports = {
     let query = db('actions');
 
     if (id) {
-      return query
-        .where('id', id)
-        .first()
-        .then(action => mappers.actionToBody(action));
+   return query.where('id', id).first();
+   // .then(action => mappers.actionToBody(action));
     }
 
     return query.then(actions => {
