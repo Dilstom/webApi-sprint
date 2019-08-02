@@ -70,6 +70,16 @@ router.get('/:id/actions', validateId, (req, res) => {
   });
 });
 
+router.post('/:id/actions', validateId, validateAction, (req, res) => {
+ const actionInfo = { ...req.body, project_id: req.params.id };
+ actionsDb
+  .insert(actionInfo)
+  .then(action => {
+   res.status(201).json(action);
+  })
+  .catch(err => res.status(500).json(err));
+});
+
 function validateId(req, res, next) {
  projectsDb
   .get(req.params.id)
