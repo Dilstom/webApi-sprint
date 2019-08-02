@@ -13,6 +13,9 @@ router.get('/', (req, res) => {
    res.status(500).json(err);
   });
 });
+router.get('/:id', validateId, (req, res) => {
+ res.status(200).json(req.action);
+});
 
 router.post('/:id');
 
